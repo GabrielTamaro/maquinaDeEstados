@@ -1,54 +1,20 @@
-import * as React from "react";
-import { StyleSheet, Pressable } from 'react-native'
-import { View, AnimatePresence } from 'moti'
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Maquina from './maquina/maquina';
+import Menu from './menu/menu';
 
-function Shape({ bg }) {
-  return (
-    <View
-      from={{
-        opacity: 0,
-        scale: 0.5,
-      }}
-      animate={{
-        opacity: 1,
-        scale: 1,
-      }}
-      exit={{
-        opacity: 0,
-        scale: 0.9,
-      }}
-      style={[styles.shape, { backgroundColor: bg }]}
-    />
-  )
-}
+const Stack = createStackNavigator();
 
 export default function App() {
-  const [visible, toggle] = React.useReducer((s) => !s, true)
 
   return (
-    <Pressable onPress={toggle} style={styles.container}>
-      <AnimatePresence exitBeforeEnter>
-        {visible && <Shape bg="hotpink" key="hotpink" />}
-        {!visible && <Shape bg="cyan" key="cyan" />}
-      </AnimatePresence>
-    </Pressable>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Menu" component={Menu} options={{headerShown: false}}></Stack.Screen>  
+        <Stack.Screen name="Maquina" component={Maquina} options={{headerShown: false}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }
 
-const styles = StyleSheet.create({
-  shape: {
-    justifyContent: 'center',
-    height: 250,
-    width: 250,
-    borderRadius: 25,
-    marginRight: 10,
-    backgroundColor: 'white',
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    backgroundColor: '#9c1aff',
-  },
-})
