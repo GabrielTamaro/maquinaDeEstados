@@ -23,11 +23,8 @@ export default function Maquina({navigation}) {
   const [quedaA, setQuedaA] = useState(false);
   const [quedaB, setQuedaB] = useState(false);
   const [quedaC, setQuedaC] = useState(false);
-
-  const [saidaDoce, setSaidaDoce] = useState(false);
-  const [saidaTroco, setSaidaTroco] = useState(false);
   
-  const scaleInDoce = useAnimationState({
+  const heightInDoce = useAnimationState({
     from: {
       height: 60,
     },
@@ -35,7 +32,7 @@ export default function Maquina({navigation}) {
       height: 0,
     },
   })
-  const scaleInTroco = useAnimationState({
+  const heightInTroco = useAnimationState({
     from: {
       height: 60,
     },
@@ -47,15 +44,15 @@ export default function Maquina({navigation}) {
   const onPress = () => {
     if(!pegou){
       if(quedaA || quedaB || quedaC){
-        if (scaleInDoce.current === 'from') {
-          scaleInDoce.transitionTo('open')
+        if (heightInDoce.current === 'from') {
+          heightInDoce.transitionTo('open')
         } else {
-          scaleInDoce.transitionTo('from')
+          heightInDoce.transitionTo('from')
         }
-        if (scaleInTroco.current === 'from') {
-          scaleInTroco.transitionTo('open')
+        if (heightInTroco.current === 'from') {
+          heightInTroco.transitionTo('open')
         } else {
-          scaleInTroco.transitionTo('from')
+          heightInTroco.transitionTo('from')
         }
       }
     }
@@ -65,10 +62,10 @@ export default function Maquina({navigation}) {
       if(pegou){
         setQuedaA(false);setQuedaB(false);setQuedaC(false);addDinheiro(0);troco = 0;setAceitaDin(true);setApenasUma(false);
         doceA = doceB = doceC = pegou = false;
-        if (scaleInDoce.current === 'from') {
-          scaleInDoce.transitionTo('open')
+        if (heightInDoce.current === 'from') {
+          heightInDoce.transitionTo('open')
         } else {
-          scaleInDoce.transitionTo('from')
+          heightInDoce.transitionTo('from')
         }
       }else{
         alert('Pegue seu troco para resetar a máquina')
@@ -77,10 +74,10 @@ export default function Maquina({navigation}) {
   }
   const onPressTroco = () => {
     if(quedaA || quedaB || quedaC){
-      if (scaleInTroco.current === 'from') {
-        scaleInTroco.transitionTo('open')
+      if (heightInTroco.current === 'from') {
+        heightInTroco.transitionTo('open')
       } else {
-        scaleInTroco.transitionTo('from')
+        heightInTroco.transitionTo('from')
       }
       pegou = true;
     }
@@ -133,7 +130,7 @@ export default function Maquina({navigation}) {
         <View style={styles.saidaTroco}>
         <TouchableOpacity onPress={onPressTroco} style={styles.nota}><Text style={styles.texto,{marginLeft: 5,}}>{'R$ ' + troco}</Text></TouchableOpacity>
                <MotiView
-                    delay={500} state={scaleInTroco}
+                    delay={500} state={heightInTroco}
                     transition={{
                       type: 'timing',
                       duration: 750,
@@ -235,9 +232,9 @@ export default function Maquina({navigation}) {
         </View>
         <View style={[styles.saidaDoce, {marginLeft: 50,}]}>
          {!aceitaDin ? <Draggable valor={''} dinheiroTotal={dinheiroTotal} addDinheiro={addDinheiro} aceitaDin={aceitaDin} setAceitaDin={setAceitaDin} setApenasUma={setApenasUma} cor={cor}/>
-         : <TouchableOpacity style={[styles.saidaDoce3,{marginLeft: 100}]}  onPress={onPressDoce}>RESET</TouchableOpacity>}
+         : <TouchableOpacity style={[styles.saidaDoce3,{marginLeft: 100}]}  onPress={onPressDoce}><Text>RESET</Text></TouchableOpacity>}
                 <MotiView
-                    state={scaleInDoce}
+                    state={heightInDoce}
                     transition={{
                       type: 'timing',
                       duration: 750,

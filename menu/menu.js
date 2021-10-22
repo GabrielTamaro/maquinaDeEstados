@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, TouchableOpacity, Button, ImageBackground } from 'react-native'
-import { MotiView, useAnimationState } from 'moti'
+import { View, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native'
+import { MotiView } from 'moti'
+import PlacaDoce from "./placaDoce";
+import PlacaPredio from "./placaPredio";
 
 
 let caminha;
@@ -20,27 +22,47 @@ export default function Menu({navigation}){
   
       if (e.keyCode == '38') {
           // up arrow
-          setMexeX(x);
-          setMexeY(-500);
-          setY(-500);
+          if(y == 0){
+            if(x == 900){caminha = -200;}
+            else{caminha = -450;}
+            setMexeX(x);
+            setMexeY(caminha);
+            setY(caminha);
+          }else{alert('Não pode fazer esse movimento!')}
       }
       else if (e.keyCode == '40') {
           // down arrow
-          setMexeX(x);
-          setMexeY(0);
-          setY(0);
+          if(y == -450 || y == -200){
+            setMexeX(x);
+            setMexeY(0);
+            setY(0);
+          }else{alert('Não pode fazer esse movimento!')}
       }
       else if (e.keyCode == '37') {
          // left arrow
-         setMexeX(0);
-         setMexeY(y);
-         setX(0);
+         if(x == 900 || x == 600){
+          setMexeX(0);
+          setMexeY(y);
+          setX(0);
+        }else{alert('Não pode fazer esse movimento!')}
       }
       else if (e.keyCode == '39') {
          // right arrow
-         setMexeX(900);
-         setMexeY(y);
-         setX(900);
+         if(x == 0){
+          if(y == -450){caminha = 600;}
+          else{caminha = 900;}
+          setMexeX(caminha);
+          setMexeY(y);
+          setX(caminha);
+        }else{alert('Não pode fazer esse movimento!')}
+      }
+      else if (e.keyCode == '13') {
+        // enter
+        if(x == 900 && y == -200){
+          navigation.navigate('Maquina');
+        }else if(x == 600 && y == -450){
+          navigation.navigate('Elevador');
+        }else{alert('O gato não esta na posição ainda!')}
       }
   
   }
@@ -49,7 +71,7 @@ export default function Menu({navigation}){
         <View style={styles.container}>
           <TouchableOpacity style={styles.right}  onPress={() => {
             if(x == 0){
-              if(y == -500){caminha = 600;}
+              if(y == -450){caminha = 600;}
               else{caminha = 900;}
               setMexeX(caminha);
               setMexeY(y);
@@ -66,14 +88,14 @@ export default function Menu({navigation}){
           <TouchableOpacity style={styles.up}  onPress={() => {
             if(y == 0){
               if(x == 900){caminha = -200;}
-              else{caminha = -500;}
+              else{caminha = -450;}
               setMexeX(x);
               setMexeY(caminha);
               setY(caminha);
             }else{alert('Não pode fazer esse movimento!')}
           }}/>
           <TouchableOpacity style={styles.down}  onPress={() => {
-            if(y == -500 || y == -200){
+            if(y == -450 || y == -200){
               setMexeX(x);
               setMexeY(0);
               setY(0);
@@ -82,6 +104,8 @@ export default function Menu({navigation}){
           <TouchableOpacity style={styles.centro}  onPress={() => {
             if(x == 900 && y == -200){
               navigation.navigate('Maquina');
+            }else if(x == 600 && y == -450){
+              navigation.navigate('Elevador');
             }else{alert('O gato não esta na posição ainda!')}
           }}/>
           <View style={styles.quadro}>
@@ -93,7 +117,12 @@ export default function Menu({navigation}){
                       style={styles.casaDoce}
                       source={require("../screens/casaDoce.png")}
            ></ImageBackground>
-           <View style={styles.placaDoce}/>
+           <PlacaDoce x={x} y={y}/>
+           <ImageBackground
+                      style={styles.predio}
+                      source={require("../screens/predio.png")}
+           ></ImageBackground>
+           <PlacaPredio x={x} y={y}/>
            <MotiView
                   style={[styles.gato,{
                     marginLeft: 20,
@@ -150,16 +179,16 @@ const styles = StyleSheet.create({
   quadro2: {
     marginBottom: 20,
     marginLeft: 20,
-    height: 600,
+    height: 550,
     width: 100,
     backgroundColor: 'yellow',
     position: 'absolute',
   },
   quadro3: {
     marginLeft: 20,
-    marginBottom: 520,
+    marginBottom: 470,
     height: 100,
-    width: 700,
+    width: 730,
     backgroundColor: 'yellow',
     position: 'absolute',
   },
@@ -178,13 +207,11 @@ const styles = StyleSheet.create({
     width: 200,
     position: 'absolute',
   },
-  placaDoce: {
-    borderRadius: 10,
-    marginBottom: 450,
-    marginLeft: 900,
-    height: 50,
-    width: 150,
-    backgroundColor: 'yellow',
+  predio: {
+    marginBottom: 460,
+    marginLeft: 640,
+    height: 270,
+    width: 200,
     position: 'absolute',
   },
   gato: {
