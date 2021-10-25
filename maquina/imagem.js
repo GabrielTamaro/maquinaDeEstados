@@ -21,7 +21,7 @@ export default function Imagem({apenasUma}){
             }}
             >
                 <ImageBackground
-                    style={[styles.gato,{width: 150, height: 130,}]}
+                    style={[styles.gato,{width: 150, height: 150,}]}
                     source={require("../screens/gato.png")}
                 ></ImageBackground>
             </MotiView>
@@ -38,8 +38,7 @@ export default function Imagem({apenasUma}){
 
 const styles = StyleSheet.create({
     gato: {
-        height: 100,
-        width: 100,
-        resizeMode: "contain",
+        height: 120,
+        width: 120,
     },
 })

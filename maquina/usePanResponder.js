@@ -3,7 +3,7 @@ import { Animated, View, StyleSheet, PanResponder, TouchableOpacity, Text } from
 import { color } from "react-native-reanimated";
 
 
-export default function Draggable({valor, dinheiroTotal, addDinheiro, aceitaDin, setAceitaDin, setApenasUma, cor = 'skyblue'}) {
+export default function Draggable({valor, dinheiroTotal, addDinheiro, aceitaDin, setAceitaDin, setApenasUma, cor = 'green'}) {
   
  
   const pan = useRef(new Animated.ValueXY()).current;

@@ -33,17 +33,21 @@ export default function Menu({navigation}){
       else if (e.keyCode == '40') {
           // down arrow
           if(y == -450 || y == -200){
-            setMexeX(x);
-            setMexeY(0);
-            setY(0);
+            if(x != 600){
+              setMexeX(x);
+              setMexeY(0);
+              setY(0);
+            }
           }else{alert('Não pode fazer esse movimento!')}
       }
       else if (e.keyCode == '37') {
          // left arrow
          if(x == 900 || x == 600){
-          setMexeX(0);
-          setMexeY(y);
-          setX(0);
+            if(y != -200){
+              setMexeX(0);
+              setMexeY(y);
+              setX(0);
+            }
         }else{alert('Não pode fazer esse movimento!')}
       }
       else if (e.keyCode == '39') {
@@ -69,86 +73,90 @@ export default function Menu({navigation}){
 
     return(
         <View style={styles.container}>
-          <TouchableOpacity style={styles.right}  onPress={() => {
-            if(x == 0){
-              if(y == -450){caminha = 600;}
-              else{caminha = 900;}
-              setMexeX(caminha);
-              setMexeY(y);
-              setX(caminha);
-            }else{alert('Não pode fazer esse movimento!')}
-          }}/>
-          <TouchableOpacity style={styles.left}  onPress={() => {
-            if(x == 900 || x == 600){
-              setMexeX(0);
-              setMexeY(y);
-              setX(0);
-            }else{alert('Não pode fazer esse movimento!')}
-          }}/>
-          <TouchableOpacity style={styles.up}  onPress={() => {
-            if(y == 0){
-              if(x == 900){caminha = -200;}
-              else{caminha = -450;}
-              setMexeX(x);
-              setMexeY(caminha);
-              setY(caminha);
-            }else{alert('Não pode fazer esse movimento!')}
-          }}/>
-          <TouchableOpacity style={styles.down}  onPress={() => {
-            if(y == -450 || y == -200){
-              setMexeX(x);
-              setMexeY(0);
-              setY(0);
-            }else{alert('Não pode fazer esse movimento!')}
-          }}/>
-          <TouchableOpacity style={styles.centro}  onPress={() => {
-            if(x == 900 && y == -200){
-              navigation.navigate('Maquina');
-            }else if(x == 600 && y == -450){
-              navigation.navigate('Elevador');
-            }else{alert('O gato não esta na posição ainda!')}
-          }}/>
-          <View style={styles.quadro}>
-           <View style={styles.quadro1}/>
-           <View style={styles.quadro2}/>
-           <View style={styles.quadro3}/>
-           <View style={styles.quadro4}/>
-           <ImageBackground
-                      style={styles.casaDoce}
-                      source={require("../screens/casaDoce.png")}
-           ></ImageBackground>
-           <PlacaDoce x={x} y={y}/>
-           <ImageBackground
-                      style={styles.predio}
-                      source={require("../screens/predio.png")}
-           ></ImageBackground>
-           <PlacaPredio x={x} y={y}/>
-           <MotiView
-                  style={[styles.gato,{
-                    marginLeft: 20,
-                    marginBottom: 20,}]}
-                  from={{
-                    translateX: x,
-                    translateY: y,
-                  }}
-                  animate={{
-                    translateX: mexeX,
-                    translateY: mexeY,
-                  }}
-                  transition={{
-                    type: 'timing',
-                    duration: 750,
-                  }}>
-                    <ImageBackground
-                      style={styles.gato}
-                      source={require("../screens/gato.png")}
-                    ></ImageBackground>
-                </MotiView>
-          </View>
-
-          {/*<Button onPress={() => {
-              navigation.navigate('Maquina');
-          }}/>*/}
+          <ImageBackground style={styles.ambiente}
+                       source={require("../screens/cidade.jpeg")}
+                       resizeMode="repeat">
+            <TouchableOpacity style={styles.right}  onPress={() => {
+              if(x == 0){
+                if(y == -450){caminha = 600;}
+                else{caminha = 900;}
+                setMexeX(caminha);
+                setMexeY(y);
+                setX(caminha);
+              }else{alert('Não pode fazer esse movimento!')}
+            }}/>
+            <TouchableOpacity style={styles.left}  onPress={() => {
+              if(x == 900 || x == 600){
+                if(y != -200){
+                  setMexeX(0);
+                  setMexeY(y);
+                  setX(0);
+                }
+              }else{alert('Não pode fazer esse movimento!')}
+            }}/>
+            <TouchableOpacity style={styles.up}  onPress={() => {
+              if(y == 0){
+                if(x == 900){caminha = -200;}
+                else{caminha = -450;}
+                setMexeX(x);
+                setMexeY(caminha);
+                setY(caminha);
+              }else{alert('Não pode fazer esse movimento!')}
+            }}/>
+            <TouchableOpacity style={styles.down}  onPress={() => {
+              if(y == -450 || y == -200){
+                if(x != 600){
+                  setMexeX(x);
+                  setMexeY(0);
+                  setY(0);
+                }
+              }else{alert('Não pode fazer esse movimento!')}
+            }}/>
+            <TouchableOpacity style={styles.centro}  onPress={() => {
+              if(x == 900 && y == -200){
+                navigation.navigate('Maquina');
+              }else if(x == 600 && y == -450){
+                navigation.navigate('Elevador');
+              }else{alert('O gato não esta na posição ainda!')}
+            }}/>
+            <View style={styles.quadro}>
+            <View style={styles.quadro1}/>
+            <View style={styles.quadro2}/>
+            <View style={styles.quadro3}/>
+            <View style={styles.quadro4}/>
+            <ImageBackground
+                        style={styles.casaDoce}
+                        source={require("../screens/casaDoce.png")}
+            ></ImageBackground>
+            <PlacaDoce x={x} y={y}/>
+            <ImageBackground
+                        style={styles.predio}
+                        source={require("../screens/predio.png")}
+            ></ImageBackground>
+            <PlacaPredio x={x} y={y}/>
+            <MotiView
+                    style={[styles.gato,{
+                      marginLeft: 20,
+                      marginBottom: 20,}]}
+                    from={{
+                      translateX: x,
+                      translateY: y,
+                    }}
+                    animate={{
+                      translateX: mexeX,
+                      translateY: mexeY,
+                    }}
+                    transition={{
+                      type: 'timing',
+                      duration: 750,
+                    }}>
+                      <ImageBackground
+                        style={styles.gato}
+                        source={require("../screens/gato.png")}
+                      ></ImageBackground>
+                  </MotiView>
+            </View>
+            </ImageBackground>
         </View>
     )
 }
@@ -162,6 +170,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#9c1aff',
   },
+  ambiente: {
+    height: '100%',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
   quadro: {
     justifyContent: 'flex-end',
     height: 700,
@@ -173,7 +188,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     height: 100,
     width: 1000,
-    backgroundColor: 'yellow',
+    backgroundColor: 'grey',
     position: 'absolute',
   },
   quadro2: {
@@ -181,7 +196,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     height: 550,
     width: 100,
-    backgroundColor: 'yellow',
+    backgroundColor: 'grey',
     position: 'absolute',
   },
   quadro3: {
@@ -189,7 +204,7 @@ const styles = StyleSheet.create({
     marginBottom: 470,
     height: 100,
     width: 730,
-    backgroundColor: 'yellow',
+    backgroundColor: 'grey',
     position: 'absolute',
   },
   quadro4: {
@@ -197,7 +212,7 @@ const styles = StyleSheet.create({
     marginLeft: 920,
     height: 300,
     width: 100,
-    backgroundColor: 'yellow',
+    backgroundColor: 'grey',
     position: 'absolute',
   },
   casaDoce: {

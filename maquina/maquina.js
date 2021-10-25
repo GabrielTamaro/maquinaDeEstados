@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, ImageBackground } from 'react-native'
 import { MotiView, useAnimationState } from 'moti'
 import Draggable from './usePanResponder'
 import Cardapio from "./cardapio";
@@ -92,10 +92,19 @@ export default function Maquina({navigation}) {
 
   return (
     <View style={styles.container}>
-        
+      <ImageBackground style={styles.ambiente}
+                       source={require("../screens/salaDeGato.jpg")}
+                       resizeMode="repeat">
       <View style={styles.cardapio}>
-      <Cardapio/>
-        </View>
+        <Cardapio/>
+        <TouchableOpacity 
+                onPress={() => {
+                  navigation.navigate('Menu');
+                }}
+                style={[styles.botaoAndar,{marginLeft: 100, marginTop: 105, backgroundColor: 'yellow'}]}>
+                  <Text>Exit</Text>
+                </TouchableOpacity>
+      </View>
       <View style={styles.maquina}>
         <TouchableOpacity onPress={() => {
           if(doceA){
@@ -256,11 +265,28 @@ export default function Maquina({navigation}) {
           <Draggable valor={2} dinheiroTotal={dinheiroTotal} addDinheiro={addDinheiro} aceitaDin={aceitaDin} setAceitaDin={''} setApenasUma={''}/>
           <Draggable valor={5} dinheiroTotal={dinheiroTotal} addDinheiro={addDinheiro} aceitaDin={aceitaDin} setAceitaDin={''} setApenasUma={''}/>
       </View>
+    </ImageBackground>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  ambiente: {
+    height: '100%',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  botaoAndar: {
+    height: 30,
+    width: 30,
+    borderRadius: 25,
+    backgroundColor: '#6fbbd3',
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   maquina: {
     height: 700,
     width: 450,
@@ -454,7 +480,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'flex-end',
     marginLeft: 900,
-    marginBottom: 500,
+    marginBottom: 475,
     height: 200,
     width: 200,
     alignItems: 'center',

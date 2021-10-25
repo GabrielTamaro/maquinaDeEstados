@@ -66,7 +66,7 @@ export default function Cardapio() {
             }}
             onPress={onPress}
         >
-            <Text style={{ fontSize: 12, paddingHorizontal: 5 }}>Cardápio</Text>
+            <Text style={{ fontSize: 15, paddingHorizontal: 10 }}>Cardápio</Text>
         </TouchableOpacity>
     </View>
   );
